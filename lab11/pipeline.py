@@ -26,8 +26,11 @@ def read_file(path: str) -> str:
         FileNotFoundError: Dacă fișierul nu există.
         IOError: La erori de citire.
     """
-    raise NotImplementedError("De implementat")
-
+    text = Path(path).read_text()
+    if text is None:
+        raise FileNotFoundError
+    print(text)
+    return text
 
 # TODO: Implementează funcția count_words
 def count_words(text: str) -> dict[str, int]:
@@ -47,7 +50,14 @@ def count_words(text: str) -> dict[str, int]:
         count_words("a a b") == {'a': 2, 'b': 1}
         count_words("") == {}
     """
-    raise NotImplementedError("De implementat")
+    contor = {} # init dictionar
+    lista_cuvinte = text.split() # imparti textul pe cuvinte
+    for cuvint in lista_cuvinte:
+        if cuvint in contor:
+            contor[cuvint] +=1
+        else:
+            contor[cuvint] = 1
+    return contor
 
 
 # TODO: Implementează funcția write_result
@@ -58,7 +68,8 @@ def write_result(result: dict, output_path: str) -> None:
         result: Dict-ul {cuvânt: frecvență} de scris.
         output_path: Calea fișierului de ieșire.
     """
-    raise NotImplementedError("De implementat")
+    Path(output_path).write_text(str(result))
+    return
 
 
 def _process_single_file(args: tuple[str, str]) -> None:
